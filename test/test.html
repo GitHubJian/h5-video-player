@@ -1,0 +1,160 @@
+<html style="font-size:67.5px">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="user-scalable=no" />
+    <meta http-equiv="Pragma" content="no-cache" />
+
+    <title>Test</title>
+
+    <script>
+      !(function(win, doc) {
+        var global = {}
+
+        !(function() {
+          var $viewport = doc.querySelector('meta[name="viewport"]'),
+            $hotcss = doc.querySelector('meta[name="hotcss"]'),
+            dpr = win.devicePixelRatio || 1,
+            maxWidth = 540,
+            designWidth = 0
+
+          dpr = dpr >= 3 ? 3 : dpr >= 2 ? 2 : 1
+
+          if ($hotcss) {
+            var content = $hotcss.getAttribute('content')
+
+            if (content) {
+              var initialDpr = content.match(/initial\-dpr=([\d\.]+)/)
+              initialDpr && (dpr = parseFloat(initialDpr[1]))
+
+              var maxWidth2 = content.match(/max\-width=([\d\.]+)/)
+              maxWidth2 && (maxWidth = parseFloat(maxWidth2[1]))
+
+              var designWidth2 = content.match(/design\-width=([\d\.]+)/)
+              designWidth2 && (designWidth = parseFloat(designWidth2[1]))
+            }
+          }
+
+          doc.documentElement.setAttribute('data-dpr', dpr)
+          doc.documentElement.setAttribute('max-width', maxWidth)
+          designWidth &&
+            doc.documentElement.setAttribute('design-width', designWidth)
+
+          global.dpr = dpr
+          global.maxWidth = maxWidth
+          global.designWidth = designWidth
+
+          var scale = 1 / dpr
+          var content =
+            'width=device-width, initial-scale=' +
+            scale +
+            ', minimum-scale=' +
+            scale +
+            ', maximum-scale=' +
+            scale +
+            ', user-scalable=no'
+
+          if ($viewport) {
+            $viewport.setAttribute('content', content)
+          } else {
+            $viewport = doc.createElement('meta')
+            $viewport.setAttribute('name', 'viewport')
+            $viewport.setAttribute('content', content)
+
+            doc.head.appendChild($viewport)
+          }
+
+          global.px2rem = function(width, designWidth) {
+            designWidth || (designWidth = parseInt(global.designWidth, 10))
+
+            return (320 * parseInt(width, 10)) / designWidth / 20
+          }
+
+          global.rem2px = function(width, designWidth) {
+            designWidth || (designWidth = parseInt(global.designWidth, 10))
+
+            return (20 * width * designWidth) / 320
+          }
+        })()
+      })(window, document)
+    </script>
+  </head>
+
+  <body>
+    <div class="player">
+      <div class="player-container">
+        <div class="player-box full">
+          <video
+            width="100%"
+            height="100%"
+            preload="auto"
+            webkit-playsinline=""
+            playsinline=""
+            poster="https://i0.hdslb.com/bfs/archive/6d6c440ed5a3b64ff7e15aefb6f0952e481a5eb4.jpg"
+            class="show"
+            style="display: inline;"
+          >
+            <source
+              src="https://cn-hbcd2-cu-v-02.acgvideo.com/upgcxcode/86/03/118560386/118560386-1-6.mp4?expires=1569339900&amp;platform=html5&amp;ssig=UAg0Sjpu72zVaxi0u5Z9HQ&amp;oi=1875535817&amp;trid=93fad946513c4b5bbee8016c03819106p&amp;nfc=1&amp;nfb=maPYqpoel5MI3qOUX6YpRA==&amp;mid=0"
+              type="video/mp4"
+            />
+          </video>
+
+          <div class="display">
+            <div class="control-bar hide">
+              <span class="control-btn btn-play"
+                ><i class="player-icon icon-play"></i></span
+              ><span class="control-btn btn-pause hide"
+                ><i class="player-icon icon-pause"></i
+              ></span>
+              <div class="time-container">
+                <span class="control-text time-current-text">00:00</span>
+                <span class="control-time-split"></span>
+                <span class="control-text time-total-text">24:00</span>
+              </div>
+              <div class="right">
+                <span class="control-btn btn-mute hide"
+                  ><i class="player-icon icon-mute"></i></span
+                ><span class="control-btn btn-unmute hide"
+                  ><i class="player-icon icon-unmute"></i></span
+                ><span class="control-volume-slider hide"
+                  ><div class="ui-slider-container">
+                    <div class="ui-slider-tracker"></div>
+                    <div class="ui-slider-label">: 100</div>
+                    <div class="ui-slider-thumb" style="width: 100%;"></div>
+                    <div class="ui-slider-event-layer"></div></div></span
+                ><span class="control-btn btn-comment active"
+                  ><i class="player-icon icon-comment"></i></span
+                ><span class="control-btn btn-repeat hide"
+                  ><i class="player-icon icon-repeat"></i></span
+                ><span class="control-btn btn-widescreen"
+                  ><i class="player-icon icon-widescreen"></i></span
+                ><span class="control-btn btn-fullscreen active hide"
+                  ><i class="player-icon icon-fullscreen"></i
+                ></span>
+              </div>
+              <div class="control-slider">
+                <div class="ui-slider-container">
+                  <div class="ui-slider-tracker"></div>
+                  <div class="ui-slider-label">: NaN</div>
+                  <div class="ui-slider-thumb"></div>
+                  <div class="ui-slider-event-layer"></div>
+                </div>
+              </div>
+            </div>
+            <div class="comment-layer"></div>
+            <div class="load-layer">
+              <img
+                src="https://i0.hdslb.com/bfs/archive/6d6c440ed5a3b64ff7e15aefb6f0952e481a5eb4.jpg"
+              /><i class="player-icon icon-preview"></i>
+            </div>
+            <div class="state-icon">
+              <i class="buff-icon"></i> <i class="pause-icon"></i>
+              <i class="play-icon"></i>
+            </div>
+            <div class="video-length">11:29</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
