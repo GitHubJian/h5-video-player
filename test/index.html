@@ -1,0 +1,132 @@
+<html style="font-size:67.5px">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="user-scalable=no" />
+    <meta http-equiv="Pragma" content="no-cache" />
+
+    <title>Test</title>
+
+    <script>
+      !(function(win, doc) {
+        var global = {}
+
+        !(function() {
+          var $viewport = doc.querySelector('meta[name="viewport"]'),
+            $hotcss = doc.querySelector('meta[name="hotcss"]'),
+            dpr = win.devicePixelRatio || 1,
+            maxWidth = 540,
+            designWidth = 0
+
+          dpr = dpr >= 3 ? 3 : dpr >= 2 ? 2 : 1
+
+          if ($hotcss) {
+            var content = $hotcss.getAttribute('content')
+
+            if (content) {
+              var initialDpr = content.match(/initial\-dpr=([\d\.]+)/)
+              initialDpr && (dpr = parseFloat(initialDpr[1]))
+
+              var maxWidth2 = content.match(/max\-width=([\d\.]+)/)
+              maxWidth2 && (maxWidth = parseFloat(maxWidth2[1]))
+
+              var designWidth2 = content.match(/design\-width=([\d\.]+)/)
+              designWidth2 && (designWidth = parseFloat(designWidth2[1]))
+            }
+          }
+
+          doc.documentElement.setAttribute('data-dpr', dpr)
+          doc.documentElement.setAttribute('max-width', maxWidth)
+          designWidth &&
+            doc.documentElement.setAttribute('design-width', designWidth)
+
+          global.dpr = dpr
+          global.maxWidth = maxWidth
+          global.designWidth = designWidth
+
+          var scale = 1 / dpr
+          var content =
+            'width=device-width, initial-scale=' +
+            scale +
+            ', minimum-scale=' +
+            scale +
+            ', maximum-scale=' +
+            scale +
+            ', user-scalable=no'
+
+          if ($viewport) {
+            $viewport.setAttribute('content', content)
+          } else {
+            $viewport = doc.createElement('meta')
+            $viewport.setAttribute('name', 'viewport')
+            $viewport.setAttribute('content', content)
+
+            doc.head.appendChild($viewport)
+          }
+
+          global.px2rem = function(width, designWidth) {
+            designWidth || (designWidth = parseInt(global.designWidth, 10))
+
+            return (320 * parseInt(width, 10)) / designWidth / 20
+          }
+
+          global.rem2px = function(width, designWidth) {
+            designWidth || (designWidth = parseInt(global.designWidth, 10))
+
+            return (20 * width * designWidth) / 320
+          }
+
+          global.mresize = function() {
+            var width =
+              doc.documentElement.getBoundingClientRect().width || t.innerWidth
+
+            global.maxWidth &&
+              width / global.dpr > global.maxWidth &&
+              (width = global.maxWidth * global.dpr)
+
+            if (!width) {
+              return !1
+            }
+
+            doc.documentElement.style.fontSize = (20 * width) / 320 + 'px'
+
+            global.callback && global.callback()
+          }
+
+          global.mresize()
+
+          win.addEventListener('resize', function() {
+            clearTimeout(global.tid)
+            global.tid = setTimeout(i.mresize, 33)
+          })
+
+          win.addEventListener('load', global.mresize, !1)
+
+          setTimeout(function() {
+            global.mresize()
+          }, 333)
+
+          win.hotcss = global
+        })()
+      })(window, document)
+    </script>
+
+    <link rel="stylesheet" href="./css/reset.css" />
+    <link rel="stylesheet" href="./css/index.css" />
+
+    <script src="../h5player.js"></script>
+  </head>
+
+  <body>
+    <div id="bofqi"></div>
+
+    <script>
+      var h5player = new window.H5Player()
+
+      h5player.create({
+        image: './asset/poster.jpg',
+        video_url: './asset/video.mp4',
+        preload: 'auto'
+      })
+    </script>
+  </body>
+</html>
