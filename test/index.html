@@ -122,14 +122,18 @@
 
     <script>
       function create() {
-        var h5player = new window.H5Player()
-        h5player.create({
+        var player = new window.H5Player()
+        player.create({
           image: './asset/poster.jpg',
           video_url: './asset/video.mp4',
-          preload: 'auto'
+          preload: 'auto',
+          autoplay: !0,
+          max_duration: 10
         })
 
-        h5player.player.start_video()
+        window.player = player
+
+        window.player.start_video()
       }
 
       create()
