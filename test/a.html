@@ -117,8 +117,8 @@
   </head>
 
   <body>
-    <!-- <button id="a">点我</button> -->
-    <div id="bofqi"></div>
+    <button id="a">点我</button>
+    <!-- <div id="bofqi"></div> -->
 
     <script>
       function create() {
@@ -132,12 +132,10 @@
         h5player.player.start_video()
       }
 
-      create()
-
-      // var $a = document.getElementById('a')
-      // $a.onclick = function() {
-      //   create()
-      // }
+      var $a = document.getElementById('a')
+      $a.onclick = function() {
+        create()
+      }
     </script>
   </body>
 </html>

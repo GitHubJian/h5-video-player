@@ -2,63 +2,83 @@
   height: 9.00267rem;
 }
 
-.ui-slider-container {
-  position: absolute;
-  width: 100%;
-  height: 30px;
-  text-align: center;
+@font-face {
+  font-family: playerIcons;
+  src: url('//static.hdslb.com/images/bilibili.eot');
 }
 
-.ui-slider-tracker {
-  position: absolute;
-  top: 0px;
-  bottom: 0px;
-  left: 0px;
-  right: -30px;
-  background: #888;
+@font-face {
+  font-family: playerIcons;
+  src: url('//static.hdslb.com/images/bilibili.ttf');
 }
 
-.ui-slider-label {
-  position: absolute;
-  display: block;
-  top: 0px;
-  bottom: 0px;
-  left: 0px;
-  right: 0px;
-  line-height: 30px;
-  font-size: 10px;
-  color: #fff;
+.player-icon {
+  display: inline-block;
+  font-family: playerIcons;
+  line-height: 1;
+  font-weight: 400;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-.ui-slider-thumb {
-  position: absolute;
-  top: 0px;
-  bottom: 0px;
-  left: 0px;
+.player-icon.icon-play:before {
+  content: 'A';
+  color: #de698c;
 }
 
-.ui-slider-thumb:after {
+.player-icon.icon-repeat:before {
+  content: 'C';
+}
+
+.player-icon.icon-fullscreen:before {
+  content: 'E';
+}
+
+.player-icon.icon-pause:before {
+  content: 'F';
+  color: #de698c;
+}
+
+.player-icon.icon-mute:before {
+  content: 'G';
+}
+
+.player-icon.icon-unmute:before {
+  content: 'H';
+}
+
+.player-icon.icon-widescreen.icon-widescreen {
+  background-repeat: no-repeat;
+  background-image: url(//s1.hdslb.com/bfs/static/mult/images/Icon_Fullscreen.png);
+  background-size: 100% auto;
+}
+
+.player-icon.icon-widescreen {
   content: '';
-  position: absolute;
   display: block;
-  top: 0px;
-  right: -30px;
-  width: 30px;
-  height: 30px;
-  border-radius: 28px;
-  box-shadow: 0 0 2pt rgba(0, 0, 0, 0.5);
-  background-color: #fff;
 }
 
-.ui-slider-event-layer {
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  bottom: 0px;
-  right: -30px;
+.player-icon.icon-preview:before {
+  content: '';
 }
-/*  */
 
+.player-icon.icon-share:before {
+  content: 'K';
+}
+
+.player-icon.icon-widescreen {
+  content: '';
+  display: block;
+}
+
+.player-icon.icon-widescreen.icon-widescreen {
+  background-repeat: no-repeat;
+  background-image: url(//s1.hdslb.com/bfs/static/mult/images/Icon_Fullscreen.png);
+  background-size: 100% auto;
+}
+
+/* */
 .player-container {
   position: relative;
   display: inline-block;
@@ -171,10 +191,20 @@
           width: 1.024rem;
           margin-left: 1.024rem;
 
+          &.hide {
+            display: none;
+          }
+
           &.btn-play,
           &.btn-pause {
             width: 2.6665rem;
             display: none;
+          }
+
+          i {
+            list-style: none;
+            cursor: default;
+            height: 100%;
           }
         }
 
@@ -186,6 +216,7 @@
 
           .control-text,
           .control-time-split {
+            font-size: 0.66662rem;
             font-family: arial, sans-serif;
             color: #fff;
             height: 100%;
@@ -195,6 +226,7 @@
           }
 
           .control-text {
+            font-size: 0.66662rem;
             width: 2.1332rem;
 
             &.time-current-text {
@@ -228,13 +260,18 @@
           float: right;
           font-size: 0;
           cursor: default;
+
+          & > * {
+            font-size: 1rem;
+            display: inline-block;
+          }
         }
 
         .control-slider {
           position: absolute;
           top: 0.896rem;
           left: 4.66637rem;
-          right: 4.79969rem;
+          right: 5.79969rem;
           width: auto;
           height: 0.08533rem;
 
@@ -305,6 +342,56 @@
             height: auto;
           }
         }
+
+        .control-volume-slider {
+          display: inline-block;
+          width: 2.6665rem;
+          height: 1.86655rem;
+          position: relative;
+
+          &.hide {
+            display: none;
+          }
+
+          .ui-slider-container {
+            top: 0.76662rem;
+            right: 0.33331rem;
+            left: 0;
+            height: 0.33331rem;
+          }
+
+          .ui-slider-tracker {
+            right: 0;
+            background-color: #949494;
+            border-radius: 0.19999rem;
+          }
+
+          .ui-slider-label {
+            display: none;
+          }
+
+          .ui-slider-thumb {
+            background-color: #00a1d6;
+            border-radius: 0.19999rem;
+
+            &::after {
+              width: 0;
+              height: 5pt;
+              right: 0;
+              border-radius: 0.19999rem;
+            }
+          }
+
+          .ui-slider-event-layer {
+            right: 0;
+          }
+
+          &.mute {
+            .ui-slider-thumb {
+              background-color: #949494;
+            }
+          }
+        }
       }
 
       .load-layer {
@@ -358,6 +445,10 @@
         margin-top: -1.93321rem;
         z-index: 2;
 
+        &.hide {
+          display: none;
+        }
+
         i {
           font-family: playerIcons;
           font-style: normal;
@@ -398,6 +489,29 @@
           }
         }
       }
+    }
+  }
+}
+
+.player-container {
+  .player-box {
+    &.wide {
+      position: fixed;
+      width: auto;
+      height: auto;
+
+      .display {
+        padding-bottom: calc(constant(safe-area-inset-bottom) * 3);
+        padding-bottom: calc(env(safe-area-inset-bottom) * 3);
+      }
+    }
+  }
+}
+
+.player-container {
+  .player-box {
+    &.full {
+      padding-bottom: 0;
     }
   }
 }
