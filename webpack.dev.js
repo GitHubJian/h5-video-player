@@ -10,16 +10,16 @@ module.exports = {
   target: 'web',
   mode: 'development',
   entry: {
-    h5player: [
+    swiper: [
       'webpack-dev-server/client?http://localhost:8423/',
-      path.join(__dirname, 'lib/index.js')
+      path.join(__dirname, 'lib/swiper.js')
     ]
   },
   output: {
     filename: '[name].js',
     path: pathConfig.dist,
     publicPath: '/',
-    library: 'H5Player',
+    library: 'swiper',
     libraryTarget: 'window'
   },
   resolve: {
